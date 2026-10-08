@@ -35,6 +35,11 @@ reales; evita depender solo de blogs.
 
 % >>> ESCRIBE AQUÍ los antecedentes del problema <<<
 
+En los últimos años, el crecimiento de los Grandes Modelos de Lenguaje ha incrementado la necesidad de memoria, almacenamiento y capacidad de procesamiento para su entrenamiento e inferencia. Esta situación ha impulsado el desarrollo de técnicas de cuantización y modelos de muy baja precisión que buscan reducir los recursos necesarios para trabajar con este tipo de sistemas.
+
+Entre las propuestas relacionadas con este problema se encuentra BitNet \cite{bitnet2023}, que introduce el uso de pesos de 1 bit dentro de una arquitectura orientada a reducir la precisión de los parámetros. Posteriormente, BitNet b1.58 \cite{bitnet1582024} amplía este enfoque utilizando una representación ternaria con valores -1, 0 y 1, buscando mantener una precisión muy baja con una representación más flexible. Otra propuesta es PB-LLM \cite{pbllm2024}, que utiliza una estrategia de binarización parcial en la que una gran parte de los pesos se reduce a baja precisión mientras una pequeña proporción se conserva con mayor precisión. También se encuentra OneBit \cite{onebit2024}, que plantea un método de cuantización de 1 bit aplicado a modelos existentes mediante una estrategia específica de representación e inicialización. Estos trabajos representan solo algunas de las propuestas existentes, ya que se han desarrollado diferentes modelos y métodos de baja precisión orientados a distintos enfoques de cuantización, binarización, entrenamiento e implementación.
+
+Estas propuestas muestran que el problema de reducir el costo computacional de los LLM puede abordarse de diferentes maneras. Entre sus ventajas se encuentra la posibilidad de disminuir el uso de memoria y trabajar con representaciones de menor precisión; sin embargo, cada enfoque presenta diferencias en arquitectura, entrenamiento, implementación y condiciones de evaluación. Debido a estas diferencias, todavía resulta necesario analizar los modelos bajo criterios comunes que permitan identificar sus características, limitaciones y viabilidad técnica dentro de un mismo estudio.
 
 \subsection{Antecedentes de la empresa} \label{sec:antecedentes_empresa} % audit:req=antecedentes_empresa
 
@@ -61,6 +66,16 @@ datos personales.
 
 % >>> ESCRIBE AQUÍ los antecedentes de la empresa <<<
 
+El Centro de Investigación y de Estudios Avanzados del Instituto Politécnico Nacional (CINVESTAV) es una institución pública dedicada a la investigación científica, el desarrollo tecnológico y la formación de recursos humanos de alto nivel. Dentro de su estructura se encuentra la Unidad Tamaulipas, ubicada en Ciudad Victoria, Tamaulipas, donde se desarrolla el proyecto de esta estancia académica.
+
+La Unidad Tamaulipas inició operaciones en 2006 como parte de una iniciativa orientada al desarrollo de las Tecnologías de Información en el estado. En sus inicios fue conocida como Laboratorio de Tecnologías de Información y surgió con el propósito de fortalecer la investigación, el desarrollo tecnológico y la formación de capital humano especializado en esta área. Con el tiempo amplió sus actividades académicas y de investigación, manteniendo un enfoque relacionado con las ciencias de la computación y las tecnologías de información.
+
+La misión de la Unidad Tamaulipas consiste en contribuir al desarrollo de México, particularmente de la región noreste, en el sector de las Tecnologías de Información y Comunicaciones mediante la investigación científica y tecnológica de alto nivel y la formación de recursos humanos especializados a nivel de posgrado, con capacidad para desenvolverse tanto en el ámbito académico como en el sector industrial.
+Actualmente, la Unidad Tamaulipas desarrolla actividades de investigación y formación de posgrado en áreas relacionadas con Ingeniería y Tecnologías Computacionales. Entre sus líneas de investigación se encuentran la Inteligencia Computacional y Optimización Avanzada, las Tecnologías para la Gestión de Datos y Redes, y la Ingeniería Computacional. Estas áreas permiten el desarrollo de proyectos relacionados con procesamiento de información, sistemas computacionales, análisis de datos, optimización e inteligencia artificial. De manera general, las actividades de la Unidad se orientan a la generación de conocimiento, el desarrollo tecnológico y la formación de recursos humanos especializados.
+
+El proyecto de esta estancia se desarrolla dentro de este contexto de investigación tecnológica y se enfoca en el estudio comparativo de Grandes Modelos de Lenguaje de 1 bit. El proceso de trabajo parte de la revisión de artículos científicos, documentación técnica e implementaciones disponibles sobre este tipo de modelos. A partir de esta información se analizan distintas propuestas, se establecen criterios para su selección y posteriormente se contempla su implementación y evaluación bajo condiciones comunes. El trabajo se apoya principalmente en artículos científicos, documentación técnica y recursos de software relacionados con los modelos considerados en el estudio.
+
+El asesor empresarial del proyecto es el Dr. Iván López Arévalo, quien orienta el desarrollo de la estancia y da seguimiento a las actividades relacionadas con la revisión de artículos científicos, el análisis de los modelos y el avance técnico del proyecto. Su función dentro del trabajo es guiar el proceso de investigación y revisar que las actividades realizadas mantengan relación con los objetivos establecidos para la estancia.
 
 \subsection{Antecedentes teóricos} \label{sec:antecedentes_teoricos} % audit:req=antecedentes_teoricos
 
@@ -80,6 +95,15 @@ tu proyecto? ¿qué fuentes los respaldan?
 
 % >>> ESCRIBE AQUÍ los antecedentes teóricos <<<
 
+Los modelos de lenguaje de 1 bit buscan reducir los recursos necesarios para ejecutar Grandes Modelos de Lenguaje mediante representaciones de muy baja precisión. Este tipo de propuestas intenta disminuir principalmente el uso de memoria y almacenamiento, lo que puede facilitar su ejecución en equipos con capacidades más limitadas \cite{bitnet2023,bitnet1582024}. Sin embargo, no todos los modelos de 1 bit utilizan el mismo método ni reducen la precisión de la misma manera.
+
+BitNet \cite{bitnet2023} propone trabajar con pesos de 1 bit dentro de su arquitectura, mientras que BitNet b1.58 \cite{bitnet1582024} utiliza una representación ternaria con valores -1, 0 y 1. Por otra parte, PB-LLM \cite{pbllm2024} utiliza una estrategia de binarización parcial en la que una parte de los pesos se mantiene con mayor precisión, y OneBit \cite{onebit2024} plantea un método de cuantización de 1 bit aplicado a modelos existentes. Estas diferencias muestran que existen distintos enfoques para reducir la precisión de los parámetros y que cada propuesta sigue condiciones distintas de entrenamiento e implementación.
+
+Otro concepto importante para este proyecto es la eficiencia computacional, ya que permite analizar aspectos relacionados con el uso de memoria, almacenamiento y capacidad de procesamiento \cite{bitnet2023,bitnet1582024}. Estos elementos son relevantes para determinar si un modelo de 1 bit puede resultar viable en entornos con recursos computacionales limitados. Por esta razón, comprender las diferencias entre los enfoques existentes sirve como base para establecer criterios de comparación y posteriormente evaluar las características de los modelos seleccionados.
+
+Además, la forma en que se implementa cada propuesta puede influir en los recursos necesarios para trabajar con ella. Algunos enfoques están diseñados desde el inicio para utilizar representaciones de muy baja precisión, como BitNet y BitNet b1.58 \cite{bitnet2023,bitnet1582024}, mientras que otros aplican técnicas de reducción de precisión sobre modelos existentes, como PB-LLM y OneBit \cite{pbllm2024,onebit2024}. Esta diferencia es importante para el proyecto porque permite identificar qué condiciones necesita cada modelo para ser implementado y posteriormente comparado bajo criterios comunes.
+
+En conjunto, estos conceptos permiten entender por qué los modelos de lenguaje de 1 bit pueden ser considerados una alternativa para reducir los requerimientos computacionales asociados con los LLM. También proporcionan una base para analizar sus diferencias y valorar su viabilidad técnica dentro del estudio comparativo que se desarrolla en este proyecto \cite{bitnet2023,bitnet1582024,pbllm2024,onebit2024}.
 
 \subsubsection{Tabla comparativa de antecedentes} \label{subsec:tabla_comparativa_antecedentes} % audit:req=tabla_comparativa
 
@@ -120,3 +144,54 @@ significativos.
 %   \end{tabular}
 % \end{table}
 % >>> ESCRIBE AQUÍ el análisis de la tabla comparativa (cítala con Tabla~\ref{tab:comparativa_antecedentes}) <<<
+
+A partir de los trabajos revisados se observan distintas formas de reducir la precisión de los Grandes Modelos de Lenguaje. La Tabla~\ref{tab:comparativa_antecedentes} compara algunas de estas propuestas utilizando criterios comunes relacionados con la estrategia empleada, el momento en que se aplica la reducción de precisión y las condiciones que pueden influir en su implementación. Los modelos incluidos representan distintos enfoques identificados durante la revisión y no corresponden todavía a la selección definitiva de los cinco modelos que serán implementados en el proyecto.
+
+\begin{table}[H]
+  \centering
+  \caption{Comparación de trabajos relacionados con la propuesta.}
+  \label{tab:comparativa_antecedentes}
+  \begin{tabular}{@{}p{2.2cm}p{2.3cm}p{2.5cm}p{2.7cm}p{3.2cm}@{}}
+    \toprule
+    \textbf{Trabajo / propuesta} &
+    \textbf{Tipo de enfoque} &
+    \textbf{Punto de aplicación} &
+    \textbf{Precisión o representación} &
+    \textbf{Condición relevante} \\
+    \midrule
+
+    BitNet \cite{bitnet2023} &
+    Arquitectura para LLM de muy baja precisión &
+    Se entrena desde cero utilizando capas BitLinear &
+    Pesos de 1 bit &
+    Requiere trabajar con una arquitectura preparada desde el entrenamiento para utilizar pesos de baja precisión. \\
+
+    BitNet b1.58 \cite{bitnet1582024} &
+    Variante de BitNet con representación ternaria &
+    Se plantea desde el entrenamiento del modelo &
+    Pesos con valores -1, 0 y 1 &
+    Incorpora un tercer valor respecto al enfoque binario y utiliza una estrategia de entrenamiento propia para esta representación. \\
+
+    PB-LLM \cite{pbllm2024} &
+    Binarización parcial &
+    Se estudia mediante PTQ y QAT &
+    La mayor parte de los pesos se binariza y una pequeña proporción se conserva con mayor precisión &
+    No aplica la misma precisión a todos los pesos, ya que busca conservar determinados pesos relevantes. \\
+
+    OneBit \cite{onebit2024} &
+    Cuantización extrema de LLM existentes &
+    Se aplica sobre matrices de pesos de modelos existentes &
+    Matrices de pesos cuantizadas a 1 bit &
+    Utiliza un método específico de representación e inicialización para realizar la cuantización. \\
+
+    \textbf{Propuesta de este trabajo} &
+    Estudio comparativo &
+    Se seleccionarán cinco modelos de la literatura, se implementarán y se probarán bajo criterios comunes &
+    Dependerá del modelo seleccionado &
+    Busca comparar sus características y resultados para conocer su viabilidad técnica, sin proponer una nueva arquitectura. \\
+
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+La comparación presentada en la Tabla~\ref{tab:comparativa_antecedentes} muestra que las propuestas revisadas no reducen la precisión de los modelos de la misma manera. BitNet y BitNet b1.58 parten de modelos diseñados desde el entrenamiento para trabajar con representaciones de muy baja precisión, mientras que PB-LLM y OneBit abordan la reducción de precisión mediante estrategias aplicadas a modelos existentes. También existen diferencias en la representación de los pesos y en las condiciones necesarias para implementar cada propuesta. Estas diferencias son relevantes para el proyecto porque permiten establecer criterios de comparación entre los modelos. A diferencia de los trabajos mostrados, la propuesta de esta estancia no busca desarrollar una nueva arquitectura, sino seleccionar cinco modelos de la literatura, implementarlos y comparar sus características y resultados para conocer su viabilidad técnica.
