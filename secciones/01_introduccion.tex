@@ -30,6 +30,17 @@ organización descrita coincida con las secciones reales del documento.
 
 % >>> ESCRIBE AQUÍ el texto de la introducción (fuera de la guía) <<<
 
+En los últimos años, los Grandes Modelos de Lenguaje, conocidos como Large Language Models (LLM), han adquirido una presencia importante dentro del campo de la inteligencia artificial debido a su capacidad para procesar, comprender y generar lenguaje natural. Este tipo de modelos se emplea actualmente en tareas como generación de texto, traducción, resumen de documentos, generación de código, recuperación de información y desarrollo de asistentes conversacionales. Su funcionamiento se encuentra estrechamente relacionado con los avances en aprendizaje profundo y, particularmente, con el uso de arquitecturas basadas en Transformers, las cuales han permitido entrenar modelos con una gran cantidad de parámetros y sobre grandes volúmenes de información. Una de las fuentes de consulta utilizadas en este proyecto describe a los LLM como sistemas capaces de comprender y generar lenguaje a partir de grandes conjuntos de datos, y señala que su aplicación se ha extendido a diferentes áreas de uso.
+
+El incremento en el tamaño y complejidad de estos modelos también ha generado nuevos retos relacionados con los recursos computacionales necesarios para su desarrollo y utilización. Una mayor cantidad de parámetros puede permitir al modelo representar patrones más complejos, pero al mismo tiempo incrementa las necesidades de procesamiento, almacenamiento y memoria. Por esta razón, existe un compromiso entre el tamaño de un modelo, su capacidad y los recursos necesarios para ejecutarlo.
+
+Ante esta problemática, una de las líneas de investigación que ha adquirido relevancia consiste en reducir la precisión numérica utilizada para representar los parámetros de los modelos. Al reducir la cantidad de bits utilizada para representar estos valores, es posible disminuir la memoria necesaria para almacenar los parámetros y, bajo determinadas implementaciones, reducir también los costos asociados con su procesamiento durante la inferencia. Este principio ha dado lugar al desarrollo de técnicas de cuantización y a propuestas de modelos diseñados específicamente para trabajar con representaciones de muy baja precisión.
+
+Dentro de esta línea se encuentran los modelos de lenguaje de 1 bit. Entre las propuestas estudiadas se encuentran BitNet y BitNet b1.58, así como otros trabajos que utilizan diferentes estrategias de binarización y cuantización. Estas propuestas buscan disminuir los recursos necesarios para almacenar y ejecutar modelos de lenguaje, aunque presentan diferencias en arquitectura, entrenamiento, implementación y desempeño.
+
+El proyecto de mi estancia se desarrolla en el Centro de Investigación y de Estudios Avanzados del Instituto Politécnico Nacional (CINVESTAV) y se enfoca en realizar un estudio comparativo de distintos LLM de 1 bit descritos en la literatura científica. Para ello, se pretende recopilar documentación sobre las propuestas existentes, establecer criterios de selección, implementar modelos, obtener un repositorio de datos para realizar pruebas y posteriormente comparar los resultados obtenidos. El propósito es contar con información que permita analizar su viabilidad técnica y conocer las diferencias existentes entre los distintos enfoques.
+
+Finalmente, el documento se encuentra organizado en distintas secciones que abordan el planteamiento del problema, los objetivos, la justificación y los alcances y limitaciones del proyecto, así como los antecedentes y conceptos teóricos necesarios para el desarrollo del estudio. Posteriormente se desarrollarán las etapas correspondientes al estado del arte, la propuesta de solución, el diseño de experimentos y las conclusiones.
 
 \subsection{Planteamiento del problema} \label{sec:problema} % audit:req=planteamiento
 
@@ -56,6 +67,13 @@ problemas sin evidencia; enunciados tan amplios que no se pueden resolver en una
 
 % >>> ESCRIBE AQUÍ el planteamiento del problema <<<
 
+El crecimiento en el tamaño y complejidad de los Grandes Modelos de Lenguaje ha incrementado los requerimientos de memoria, almacenamiento y capacidad de procesamiento necesarios para su entrenamiento y ejecución. Esta situación puede dificultar el uso de estos modelos por parte de investigadores o desarrolladores que trabajan en entornos con recursos computacionales limitados, especialmente cuando no se dispone de infraestructura especializada.
+
+Ante esta situación han surgido propuestas de modelos de lenguaje de muy baja precisión, entre ellas distintos modelos de 1 bit. Sin embargo, estas propuestas emplean estrategias diferentes de representación, cuantización y entrenamiento. Por ejemplo, BitNet propone el uso de pesos de 1 bit dentro de su arquitectura, BitNet b1.58 utiliza una representación ternaria con valores -1, 0 y 1, y otras propuestas como PB-LLM y OneBit siguen enfoques distintos de binarización y cuantización. Estas diferencias dificultan realizar una comparación directa entre los modelos.
+
+Además, la información sobre sus características y resultados se encuentra distribuida entre distintos trabajos y no siempre se presenta bajo los mismos criterios o condiciones de evaluación. Como consecuencia, no es sencillo determinar con claridad las diferencias entre las propuestas ni valorar su viabilidad técnica bajo un mismo marco de análisis.
+
+El problema que se aborda en este proyecto es la dificultad de comparar de manera directa distintos modelos de lenguaje de 1 bit debido a las diferencias en sus enfoques, características y criterios de evaluación.
 
 \subsection{Objetivos} \label{sec:objetivos} % audit:req=objetivos
 
@@ -84,9 +102,18 @@ con tiempo definido.
 \subsubsection{Objetivo general} \label{subsec:objetivo_general}
 % >>> ESCRIBE AQUÍ el objetivo general (una sola oración) <<<
 
+Generar un estudio comparativo de los Grandes Modelos de Lenguaje 1-bit (1-bit LLM) de la literatura científica.
+
 \subsubsection{Objetivos específicos} \label{subsec:objetivos_especificos}
 % >>> ESCRIBE AQUÍ los objetivos específicos como lista numerada: \begin{enumerate} \item ... \end{enumerate} <<<
 
+\begin{enumerate}
+    \item Obtener 1 compendio de la documentación de los 1-bit LLM de la literatura.
+    \item Establecer 1 conjunto de criterios de selección de los 1-bit LLM de la literatura.
+    \item Implementar los 5 mejores 1-bit LLM.
+    \item Obtener 1 repositorio de datos para probar los 1-bit LLM seleccionados.
+    \item Comparar los 5 1-bit LLM seleccionados.
+\end{enumerate}
 
 \subsection{Justificación} \label{sec:justificacion} % audit:req=justificacion
 
@@ -112,6 +139,13 @@ eficiencia''); olvidar al beneficiario.
 
 % >>> ESCRIBE AQUÍ la justificación <<<
 
+El estudio de los Grandes Modelos de Lenguaje de 1 bit resulta relevante debido al interés actual por reducir los recursos computacionales necesarios para trabajar con modelos de lenguaje de gran tamaño. Analizar distintas propuestas permite conocer sus características, diferencias y condiciones de implementación, lo cual puede ser útil para investigadores y desarrolladores interesados en utilizar modelos de baja precisión en entornos con recursos limitados.
+
+Desde el punto de vista tecnológico y académico, el proyecto permite reunir y comparar información sobre diferentes enfoques de 1 bit bajo criterios comunes. Esto facilita identificar las características de cada propuesta, sus diferencias y las condiciones en las que puede resultar viable su implementación. Si este tipo de análisis no se realiza, la selección de un modelo puede depender únicamente de información aislada o de resultados obtenidos bajo condiciones distintas, dificultando una valoración directa entre propuestas.
+
+El proyecto resulta viable porque existen publicaciones, implementaciones y documentación de distintos modelos de lenguaje de 1 bit que pueden ser revisados y probados a diferentes escalas. Además, el enfoque comparativo permite desarrollar el trabajo de manera gradual, comenzando con la revisión de la literatura, la selección de modelos y posteriormente su implementación y evaluación.
+
+Esta investigación se relaciona con la carrera de Ingeniería en Tecnologías de la Información e Innovación Digital, ya que involucra el análisis de tecnologías emergentes, implementación de modelos, manejo de datos, evaluación de soluciones y uso de herramientas computacionales aplicadas a un problema de investigación.
 
 \subsection{Alcances y limitaciones} \label{sec:alcances_limitaciones} % audit:req=alcances
 
@@ -136,5 +170,9 @@ queda fuera.
 \subsubsection{Alcances} \label{subsec:alcances}
 % >>> ESCRIBE AQUÍ los alcances <<<
 
+El proyecto incluye la revisión y análisis de distintos modelos de lenguaje de 1 bit encontrados en la literatura científica. A partir de esta revisión se establecerán criterios de selección para elegir las propuestas que serán consideradas en el estudio. También se contempla la implementación de los modelos seleccionados, el uso de un repositorio de datos común para realizar pruebas y la comparación de sus características y resultados. El análisis estará enfocado en conocer su viabilidad técnica, especialmente en entornos donde los recursos computacionales son limitados. El proyecto se centrará en el análisis e implementación de modelos existentes, sin considerar el desarrollo de una arquitectura nueva.
+
 \subsubsection{Limitaciones} \label{subsec:limitaciones}
 % >>> ESCRIBE AQUÍ las limitaciones <<<
+
+El proyecto depende de la disponibilidad de documentación, código e implementaciones funcionales de los modelos seleccionados. En algunos casos, el código o los ejemplos disponibles no se encuentran completos o no permiten reproducir de manera directa un caso práctico, lo que puede dificultar la comprensión e implementación de ciertas propuestas. También existen limitaciones relacionadas con los recursos de cómputo disponibles, especialmente con la memoria RAM necesaria para ejecutar algunos modelos, ya que el equipo disponible puede no contar con la capacidad requerida para realizar pruebas a gran escala. Debido a estas condiciones, algunas implementaciones y pruebas podrían realizarse a una escala menor que la presentada en los trabajos originales.
