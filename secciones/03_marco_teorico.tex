@@ -34,37 +34,62 @@ propuesta.
 
 % >>> REVISIÓN 2: ESCRIBE AQUÍ el marco teórico (introducción breve y una \subsection por tema) <<<
 
+Este marco teórico reúne los conceptos necesarios para comprender el funcionamiento y la evaluación de los Grandes Modelos de Lenguaje de 1-bit. Para ello, se abordan inicialmente los fundamentos de los Grandes Modelos de Lenguaje y la arquitectura Transformer, para posteriormente explicar la cuantización y su relación con los modelos de muy baja precisión. Finalmente, se presentan las métricas de evaluación y los conceptos relacionados con la eficiencia computacional, los cuales serán necesarios para analizar la viabilidad técnica de los modelos seleccionados en este proyecto.
 
-\subsection{Temas tentativos del marco teórico} \label{sec:temas_tentativos} % audit:req=temas_marco_teorico
+\subsection{Grandes modelos de lenguaje (LLM)}
 
-\begin{guia}[Guía: Temas tentativos del marco teórico (Revisión 1)]
-\textbf{¿Para qué sirve?} En la primera revisión no se pide el marco teórico completo, sino la lista de los temas que
-vas a desarrollar. Así el director puede confirmar que vas bien encaminado.
+Los Grandes Modelos de Lenguaje, conocidos como LLM, son modelos de inteligencia artificial entrenados con grandes cantidades de datos textuales para aprender patrones del lenguaje y generar respuestas en distintas tareas de procesamiento de lenguaje natural. Su funcionamiento depende de una gran cantidad de parámetros que representan la información aprendida durante el entrenamiento. Debido a su tamaño, estos modelos pueden requerir cantidades importantes de memoria y capacidad de procesamiento, lo que ha impulsado el desarrollo de técnicas orientadas a mejorar su eficiencia \cite{llmSurvey2024}.
 
-\textbf{Debe responder:} ¿cuáles son los temas (de 5 a 10) que necesito para sustentar el proyecto? Para cada uno, en una
-o dos oraciones: ¿qué es y por qué lo necesito?
+\subsection{Arquitectura Transformer}
 
-\textbf{Formato:} una lista (\verb|\begin{enumerate}| o \verb|itemize|), un tema por elemento.
+La arquitectura Transformer es una forma de organizar un modelo de inteligencia artificial para que pueda analizar información escrita y entender qué partes de un texto están relacionadas entre sí. Su principal característica es el mecanismo de atención, que permite al modelo identificar qué palabras o elementos son más importantes dentro de una secuencia. Por ejemplo, al analizar una oración, puede relacionar una palabra con otras que aparecen antes o después para comprender mejor su significado. Además, esta arquitectura permite procesar gran parte de la información de manera paralela, lo que facilita el entrenamiento de modelos de lenguaje de gran tamaño. Transformer se convirtió en una de las bases principales para el desarrollo de numerosos LLM modernos \cite{transformerSurvey}.
 
-\textbf{Extensión mínima:} 25 palabras. En la Revisión 2 conviertes cada tema en una subsección desarrollada.
+\subsection{Cuantización}
 
-\textbf{Cómo se revisa:} que los temas cubran lo necesario para el proyecto y no incluyan relleno.
-\end{guia}
+La cuantización es una técnica utilizada para reducir la cantidad de información necesaria para representar los valores numéricos de un modelo de lenguaje. En lugar de utilizar formatos de alta precisión, como 32 o 16 bits, se emplean representaciones con menos bits, por ejemplo 8, 4 o incluso menos. Esto permite disminuir el tamaño del modelo y el uso de memoria, además de reducir ciertos costos de procesamiento. Sin embargo, utilizar una menor precisión también puede provocar pérdida de información y afectar el rendimiento, por lo que los métodos de cuantización buscan encontrar un equilibrio entre eficiencia y calidad del modelo \cite{lowBitSurvey}.
+
+\subsection{Grandes Modelos de Lenguaje de 1-bit}
+
+Los Grandes Modelos de Lenguaje de 1-bit son modelos que utilizan representaciones de muy baja precisión para reducir la cantidad de información necesaria para almacenar sus parámetros. A diferencia de los LLM tradicionales, que suelen utilizar formatos de mayor precisión, los modelos de 1-bit buscan representar los pesos mediante valores binarios o cercanos a este nivel de precisión. Esto permite reducir el uso de memoria, almacenamiento y recursos computacionales, aunque también puede generar pérdida de información, por lo que estos modelos emplean diferentes técnicas para conservar el rendimiento \cite{lowBitSurvey}.
+
+\subsection{Métricas de Evaluación}
+
+Las métricas de evaluación son medidas utilizadas para analizar el desempeño de un modelo de lenguaje desde diferentes perspectivas. Dependiendo del objetivo de la evaluación, pueden medir aspectos como la exactitud de las respuestas, la perplejidad, el tamaño del modelo, el uso de memoria, la latencia o el consumo de recursos. Estas métricas permiten comparar distintos modelos bajo criterios comunes y ayudan a identificar qué tan eficiente y útil es cada uno para una tarea determinada. En este proyecto serán importantes para comparar de manera objetiva los Grandes Modelos de Lenguaje de 1-bit seleccionados \cite{llmEvaluation}.
+
+\subsection{Eficiencia Computacional y Uso de Recursos}
+
+La eficiencia computacional se refiere a qué tan bien utiliza un modelo los recursos necesarios para funcionar. En los Grandes Modelos de Lenguaje, esto incluye aspectos como la memoria utilizada, el espacio de almacenamiento, la velocidad de ejecución y la capacidad de procesamiento requerida. Analizar estos recursos permite conocer qué tan viable es ejecutar un modelo en diferentes equipos o entornos. En el caso de los LLM de 1-bit, este aspecto es importante porque una de sus principales propuestas es reducir los recursos necesarios mediante representaciones de menor precisión \cite{efficientLLMs}.
+
+%\subsection{Temas tentativos del marco teórico} \label{sec:temas_tentativos} % audit:req=temas_marco_teorico
+
+%\begin{guia}[Guía: Temas tentativos del marco teórico (Revisión 1)]
+%\textbf{¿Para qué sirve?} En la primera revisión no se pide el marco teórico completo, sino la lista de los temas que
+%vas a desarrollar. Así el director puede confirmar que vas bien encaminado.
+
+%\textbf{Debe responder:} ¿cuáles son los temas (de 5 a 10) que necesito para sustentar el proyecto? Para cada uno, en una
+%o dos oraciones: ¿qué es y por qué lo necesito?
+
+%\textbf{Formato:} una lista (\verb|\begin{enumerate}| o \verb|itemize|), un tema por elemento.
+
+%\textbf{Extensión mínima:} 25 palabras. En la Revisión 2 conviertes cada tema en una subsección desarrollada.
+
+%\textbf{Cómo se revisa:} que los temas cubran lo necesario para el proyecto y no incluyan relleno.
+%\end{guia}
 
 % >>> REVISIÓN 1: ESCRIBE AQUÍ la lista de temas tentativos <<<
 
-\begin{enumerate}
+%\begin{enumerate}
 
-\item \textbf{Grandes Modelos de Lenguaje (LLM).} Los Grandes Modelos de Lenguaje son sistemas de inteligencia artificial entrenados con grandes cantidades de texto para procesar y generar lenguaje natural. Este tema es necesario para comprender la base de los modelos que serán analizados en el proyecto y el contexto en el que surgen las propuestas de LLM de 1 bit.
+%\item \textbf{Grandes Modelos de Lenguaje (LLM).} Los Grandes Modelos de Lenguaje son sistemas de inteligencia artificial entrenados con grandes cantidades de texto para procesar y generar lenguaje natural. Este tema es necesario para comprender la base de los modelos que serán analizados en el proyecto y el contexto en el que surgen las propuestas de LLM de 1 bit.
 
-\item \textbf{Arquitectura Transformer.} La arquitectura Transformer es una estructura utilizada en numerosos modelos de lenguaje modernos y permite procesar relaciones entre elementos de una secuencia mediante mecanismos de atención. Este tema es necesario para comprender la base arquitectónica sobre la que se desarrollan distintos LLM y cómo se relaciona con los modelos de baja precisión estudiados.
+%\item \textbf{Arquitectura Transformer.} La arquitectura Transformer es una estructura utilizada en numerosos modelos de lenguaje modernos y permite procesar relaciones entre elementos de una secuencia mediante mecanismos de atención. Este tema es necesario para comprender la base arquitectónica sobre la que se desarrollan distintos LLM y cómo se relaciona con los modelos de baja precisión estudiados.
 
-\item \textbf{Cuantización de modelos de lenguaje.} La cuantización es una técnica que reduce la precisión numérica utilizada para representar los parámetros de un modelo. Este tema es necesario para comprender cómo se disminuyen los requerimientos de memoria y procesamiento y cómo se relaciona este proceso con los modelos de lenguaje de 1 bit.
+%\item \textbf{Cuantización de modelos de lenguaje.} La cuantización es una técnica que reduce la precisión numérica utilizada para representar los parámetros de un modelo. Este tema es necesario para comprender cómo se disminuyen los requerimientos de memoria y procesamiento y cómo se relaciona este proceso con los modelos de lenguaje de 1 bit.
 
-\item \textbf{Modelos de lenguaje de 1 bit.} Los modelos de lenguaje de 1 bit utilizan representaciones de muy baja precisión en sus parámetros con el objetivo de reducir los recursos computacionales necesarios para su almacenamiento y ejecución. Este tema es central para el proyecto porque constituye el objeto principal del estudio comparativo.
+%\item \textbf{Modelos de lenguaje de 1 bit.} Los modelos de lenguaje de 1 bit utilizan representaciones de muy baja precisión en sus parámetros con el objetivo de reducir los recursos computacionales necesarios para su almacenamiento y ejecución. Este tema es central para el proyecto porque constituye el objeto principal del estudio comparativo.
 
-\item \textbf{Métricas de evaluación de modelos de lenguaje.} Las métricas de evaluación permiten medir distintos aspectos del comportamiento y desempeño de un modelo de lenguaje. Este tema es necesario para identificar criterios que permitan comparar de manera objetiva los modelos seleccionados durante el desarrollo del proyecto.
+%\item \textbf{Métricas de evaluación de modelos de lenguaje.} Las métricas de evaluación permiten medir distintos aspectos del comportamiento y desempeño de un modelo de lenguaje. Este tema es necesario para identificar criterios que permitan comparar de manera objetiva los modelos seleccionados durante el desarrollo del proyecto.
 
-\item \textbf{Eficiencia computacional y uso de recursos en LLM.} La eficiencia computacional analiza los recursos necesarios para entrenar o ejecutar un modelo, como memoria, almacenamiento y capacidad de procesamiento. Este tema es necesario para valorar la viabilidad técnica de los modelos de 1 bit y comparar sus requerimientos bajo condiciones similares.
+%\item \textbf{Eficiencia computacional y uso de recursos en LLM.} La eficiencia computacional analiza los recursos necesarios para entrenar o ejecutar un modelo, como memoria, almacenamiento y capacidad de procesamiento. Este tema es necesario para valorar la viabilidad técnica de los modelos de 1 bit y comparar sus requerimientos bajo condiciones similares.
 
-\end{enumerate}
+%\end{enumerate}
