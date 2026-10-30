@@ -37,6 +37,67 @@ los últimos 5 a 7 años más los trabajos clásicos); describir sin comparar; n
 
 % >>> ESCRIBE AQUÍ la metodología de búsqueda y el análisis por temas <<<
 
+\subsection{Metodología de búsqueda}
+
+La investigación bibliográfica comenzó a finales de agosto de 2026, durante el inicio de la estancia académica. Inicialmente, se realizó una búsqueda exploratoria sobre los Grandes Modelos de Lenguaje (LLM) con el propósito de comprender sus características y funcionamiento. Conforme avanzó la revisión de la literatura, se identificaron diferentes propuestas relacionadas con los modelos de lenguaje de 1-bit, lo que permitió orientar la investigación hacia este tipo de modelos.
+
+Durante esta primera etapa se consultaron plataformas como Google Académico, arXiv, GitHub y Hugging Face, utilizando artículos científicos, documentación técnica y repositorios disponibles. También se revisaron investigaciones publicadas en congresos, las cuales permitieron conocer diferentes propuestas y sus características. Sin embargo, estos trabajos no se consideraron entre los diez artículos de revista requeridos para el Estado del arte.
+
+En octubre de 2026 se complementó la investigación mediante una búsqueda dirigida a publicaciones científicas relacionadas con los modelos de lenguaje de 1-bit, la cuantización y la eficiencia computacional. Se consultaron registros y páginas oficiales de publicaciones disponibles en Springer Nature Link, ScienceDirect, IEEE Xplore, ACM Digital Library y Journal of Machine Learning Research.
+
+Se utilizaron términos de búsqueda en inglés como \textit{1-bit large language models}, \textit{BitNet}, \textit{low-bit large language models}, \textit{LLM compression}, \textit{LLM evaluation} y \textit{on-device large language models}. Se consideraron publicaciones correspondientes al periodo de 2024 a 2026, dando prioridad a aquellas relacionadas con los objetivos de la investigación.
+
+Como criterios de inclusión se consideraron artículos publicados en revistas científicas, con registros editoriales verificables y relacionados con los LLM, los modelos de 1-bit, la cuantización, la compresión, la eficiencia computacional o los métodos de evaluación. Se excluyeron artículos de congreso, documentos disponibles únicamente como prepublicaciones y trabajos sin relación suficiente con el problema estudiado.
+
+Finalmente, se seleccionaron diez artículos científicos de revista para analizar sus enfoques, métodos, resultados y limitaciones. Las investigaciones se organizaron por temas, distinguiendo los estudios experimentales de las revisiones bibliográficas, con el propósito de identificar sus diferencias y establecer su relación con la propuesta de esta tesina.
+
+
+\subsection{Análisis de la literatura por temas}
+
+\subsubsection{Grandes Modelos de Lenguaje y sus fundamentos}
+
+Kumar \cite{llmSurvey2024} presenta una revisión de las arquitecturas, aplicaciones y desafíos de los Grandes Modelos de Lenguaje, examinando sus características técnicas y las dificultades relacionadas con su desarrollo. Su investigación permite identificar problemas asociados con la complejidad de estos sistemas y sus requisitos computacionales, aunque no realiza una evaluación experimental específica de modelos de 1-bit.
+
+Por otra parte, Zhang y Shafiq \cite{transformerSurvey} comparan cinco modelos basados en Transformer mediante seis tareas de procesamiento de lenguaje natural, incluyendo clasificación de sentimientos, generación de texto y respuesta a preguntas. Sus resultados muestran diferencias de desempeño entre los modelos y que algunas combinaciones de modelos pueden superar a clasificadores individuales en determinadas tareas. Sin embargo, su estudio no considera específicamente las representaciones de muy baja precisión.
+
+Ambas investigaciones permiten comprender los desafíos generales de los LLM y muestran que su desempeño depende de las características de cada arquitectura y de las tareas evaluadas. No obstante, sus resultados no permiten determinar las ventajas y limitaciones de los modelos de lenguaje de 1-bit.
+
+
+\subsubsection{Cuantización y modelos de lenguaje de 1-bit}
+
+Gong y colaboradores \cite{lowBitSurvey} presentan una revisión de técnicas de cuantización de baja precisión, considerando sus fundamentos, algoritmos y sistemas de implementación. Su investigación analiza estrategias para reducir los requisitos computacionales de los LLM y las dificultades asociadas con la pérdida de precisión. Sin embargo, al tratarse de una revisión bibliográfica, no proporciona resultados obtenidos mediante un procedimiento experimental único para todos los modelos estudiados.
+
+Entre las investigaciones enfocadas en representaciones de muy baja precisión se encuentra BitNet, presentado por Wang y colaboradores \cite{bitnetJMLR2025}. Este trabajo propone utilizar capas BitLinear para entrenar modelos con pesos binarios o ternarios. Su variante BitNet b1.58 representa los pesos mediante los valores -1, 0 y 1. Los experimentos reportan resultados comparables a los de modelos Transformer de media precisión con tamaños y cantidades de datos de entrenamiento equivalentes, además de beneficios en memoria, latencia y consumo energético. Sin embargo, su implementación requiere un proceso de entrenamiento adaptado a esta arquitectura.
+
+Como alternativa, Guo y colaboradores \cite{ptBitnet2025} presentan PT-BitNet, un método de cuantización posterior al entrenamiento que utiliza aproximadamente 1.5 bits para los pesos y 8 bits para las activaciones. La propuesta se evalúa utilizando modelos previamente entrenados de las familias OPT y LLaMA, incluyendo configuraciones de hasta 70 mil millones de parámetros. Sus evaluaciones consideran métricas como perplejidad y exactitud en tareas de razonamiento. A diferencia de BitNet, este método permite aprovechar modelos existentes, aunque los resultados dependen de sus características originales y del procedimiento de cuantización aplicado.
+
+Por su parte, Wang y colaboradores \cite{bitnetV22026} presentan BitNet v2, una investigación orientada a mejorar la representación de las activaciones en modelos de muy baja precisión. Su propuesta utiliza técnicas de cuantización y dispersión para reducir los errores asociados con valores atípicos. Entre sus configuraciones se encuentra BitNet v2 a4.8, que combina representaciones de 4 y 8 bits en distintas etapas del procesamiento de activaciones. Este enfoque amplía las posibilidades de optimización, aunque sus beneficios prácticos también dependen del soporte de ejecución disponible.
+
+Estas investigaciones muestran tres enfoques diferentes: entrenar modelos desde el inicio con pesos de muy baja precisión, cuantizar modelos previamente entrenados y optimizar adicionalmente sus activaciones. Por ello, comparar únicamente la cantidad de bits utilizada resulta insuficiente para determinar las ventajas de cada propuesta. También deben considerarse sus métodos de implementación, resultados y requisitos computacionales.
+
+
+\subsubsection{Eficiencia computacional y ejecución de modelos}
+
+Cheng y colaboradores \cite{efficientLLMs} presentan una revisión de estrategias para mejorar la eficiencia de los Grandes Modelos de Lenguaje, incluyendo técnicas de compresión y aceleración de inferencia. Su investigación analiza los principios, métodos y desafíos asociados con estas estrategias. Aunque permite identificar factores importantes para optimizar la ejecución, no proporciona una comparación experimental específica de los modelos de 1-bit considerados en esta tesina.
+
+Por otra parte, Hildebrand y colaboradores \cite{compressionComparison2026} realizan un estudio experimental de técnicas de compresión utilizando catorce modelos de cinco familias y ocho pruebas de evaluación. Su investigación considera cuantización, poda de parámetros y ajuste eficiente, utilizando equipos que incluyen servidores, computadoras personales y teléfonos inteligentes. Entre las medidas analizadas se encuentran el consumo de memoria, la latencia, la velocidad de generación y el desempeño en diferentes tareas.
+
+Los resultados muestran que la cuantización puede reducir considerablemente los requisitos de memoria y facilitar la ejecución en equipos con recursos limitados. Sin embargo, también identifican casos en los que una mayor compresión no produce mejoras de velocidad, debido a las características del modelo y al soporte del hardware. La principal limitación para esta tesina es que el estudio no se concentra exclusivamente en modelos de lenguaje de 1-bit.
+
+Asimismo, Chen y colaboradores \cite{onDeviceSurvey2026} revisan métodos de compresión y optimización de sistemas para ejecutar LLM directamente en dispositivos. Su investigación examina las restricciones de memoria, procesamiento y transferencia de datos, así como las herramientas utilizadas para mejorar la ejecución local. Al tratarse de una revisión bibliográfica, no proporciona resultados experimentales obtenidos bajo condiciones comunes para los modelos seleccionados en este proyecto.
+
+En conjunto, estas investigaciones muestran que reducir el tamaño de un modelo no garantiza una ejecución más eficiente. El rendimiento también depende de la arquitectura, las herramientas de implementación y las características del equipo utilizado. Por esta razón, la viabilidad técnica debe analizarse considerando tanto los recursos necesarios como las condiciones de ejecución.
+
+
+\subsubsection{Evaluación de modelos y problemas pendientes}
+
+Chang y colaboradores \cite{llmEvaluation} presentan una revisión de los métodos utilizados para evaluar Grandes Modelos de Lenguaje, organizándolos según qué se evalúa, cómo se evalúa y dónde se evalúa. Su investigación considera diferentes tareas, conjuntos de datos y procedimientos, mostrando que las conclusiones sobre el desempeño dependen de los criterios utilizados. Sin embargo, no realiza una comparación experimental específica de modelos de lenguaje de 1-bit.
+
+Al relacionar este trabajo con las investigaciones anteriores, se identifica que los modelos y métodos estudiados utilizan diferentes arquitecturas, conjuntos de datos, métricas y condiciones experimentales. Estas diferencias dificultan comparar directamente los resultados reportados y determinar qué propuestas ofrecen mayores ventajas bajo un mismo entorno de evaluación.
+
+Aunque existen avances importantes en cuantización y eficiencia computacional, los trabajos revisados no proporcionan una comparación directamente aplicable a los cinco modelos de 1-bit y las condiciones de evaluación planteadas en esta tesina. Esta situación representa la brecha específica que busca abordar la investigación.
+
+Por ello, se propone analizar los modelos seleccionados mediante consultas, procedimientos y métricas comunes, considerando tanto la calidad de sus respuestas como los recursos necesarios para su ejecución. Esto permitirá identificar sus diferencias y limitaciones, así como determinar cuáles presentan características más favorables según los criterios establecidos.
 
 \subsection{Tabla comparativa del estado del arte} \label{sec:tabla_estado_arte} % audit:req=tabla_estado_arte
 
