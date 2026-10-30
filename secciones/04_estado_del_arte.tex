@@ -109,6 +109,134 @@ cada fila con su \verb|\cite{clave}| y un párrafo que la interprete. Hay un eje
 
 % >>> ESCRIBE AQUÍ la tabla (entorno table con booktabs) y su análisis <<<
 
+La Tabla~\ref{tab:estado_arte_comparacion} presenta una comparación de los métodos, evaluaciones, resultados y limitaciones de los diez artículos revisados, además de la propuesta de esta tesina.
+
+\begin{table}[H]
+\centering
+\fontsize{9}{10.5}\selectfont
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.04}
+\caption{Comparación de investigaciones relacionadas con los modelos de lenguaje de 1-bit}
+\label{tab:estado_arte_comparacion}
+\begin{tabular}{@{}L{2.5cm}L{3.15cm}L{5.35cm}L{4.05cm}@{}}
+\toprule
+\textbf{Trabajo} & \textbf{Método o enfoque} & \textbf{Datos, métricas y resultados} & \textbf{Limitaciones} \\
+\midrule
+Kumar (2024) \cite{llmSurvey2024}
+&
+Revisión de arquitecturas, aplicaciones y desafíos de los LLM.
+&
+Analiza investigaciones sobre arquitecturas, representaciones del lenguaje y aplicaciones. Identifica desafíos técnicos y computacionales.
+&
+No realiza pruebas experimentales que permitan medir el impacto de reducir la precisión numérica.
+\\
+\midrule
+Zhang y Shafiq (2024) \cite{transformerSurvey}
+&
+Comparación de modelos Transformer y métodos de aprendizaje por conjuntos.
+&
+Evalúa cinco modelos en seis tareas de lenguaje. Reporta diferencias de desempeño y mejoras mediante combinaciones de modelos en determinadas tareas.
+&
+Su evaluación se centra en el desempeño de las tareas, sin analizar los requisitos de memoria o la cuantización extrema.
+\\
+\midrule
+Gong y colaboradores (2025) \cite{lowBitSurvey}
+&
+Revisión de métodos de cuantización de baja precisión.
+&
+Clasifica técnicas, algoritmos y sistemas de ejecución. Identifica ventajas, dificultades y herramientas para reducir la precisión de los LLM.
+&
+No establece resultados experimentales uniformes que permitan comparar directamente las técnicas analizadas.
+\\
+\midrule
+Wang y colaboradores (2025) \cite{bitnetJMLR2025}
+&
+Entrenamiento de modelos mediante BitLinear y representaciones binarias o ternarias.
+&
+Evalúa perplejidad, desempeño en tareas, memoria, latencia y consumo energético. BitNet b1.58 obtiene resultados comparables a modelos FP16 bajo condiciones equivalentes, con ventajas de eficiencia.
+&
+Requiere un entrenamiento adaptado desde el inicio, por lo que no permite convertir directamente cualquier modelo preentrenado.
+\\
+\midrule
+Guo y colaboradores (2025) \cite{ptBitnet2025}
+&
+Cuantización posterior al entrenamiento mediante PT-BitNet.
+&
+Evalúa modelos OPT y LLaMA de hasta 70 mil millones de parámetros. Utiliza perplejidad y exactitud para analizar la conservación del desempeño con pesos de aproximadamente 1.5 bits.
+&
+Su aplicación depende de las características del modelo original y de la capacidad del método para conservar información durante la cuantización.
+\\
+\midrule
+Wang y colaboradores (2026) \cite{bitnetV22026}
+&
+Cuantización y dispersión de activaciones mediante BitNet v2.
+&
+Estudia configuraciones que combinan activaciones de 4 y 8 bits. Reporta mejoras en la representación de activaciones y resultados competitivos frente a configuraciones anteriores de BitNet.
+&
+Su evaluación se concentra en las activaciones; las mejoras de rendimiento deben comprobarse según las condiciones de ejecución.
+\\
+\midrule
+Cheng y colaboradores (2026) \cite{efficientLLMs}
+&
+Revisión de estrategias para acelerar la inferencia de LLM.
+&
+Examina principios, algoritmos y aplicaciones de técnicas de aceleración. Identifica métodos para reducir los costos computacionales y desafíos pendientes.
+&
+Al reunir estudios con condiciones diferentes, no ofrece una evaluación experimental homogénea de las estrategias revisadas.
+\\
+\midrule
+Hildebrand y colaboradores (2026) \cite{compressionComparison2026}
+&
+Evaluación experimental de técnicas de compresión en diferentes equipos.
+&
+Compara 14 modelos de cinco familias mediante ocho pruebas. Analiza cuantización, poda y ajuste eficiente. Encuentra que la compresión puede reducir memoria, pero la aceleración depende del hardware y del soporte de ejecución.
+&
+Analiza distintas técnicas y familias de LLM, sin centrarse exclusivamente en arquitecturas de 1-bit.
+\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\fontsize{9}{10.5}\selectfont
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.04}
+\begin{tabular}{@{}L{2.5cm}L{3.15cm}L{5.35cm}L{4.05cm}@{}}
+\toprule
+\textbf{Trabajo} & \textbf{Método o enfoque} & \textbf{Datos, métricas y resultados} & \textbf{Limitaciones} \\
+\midrule
+Chen y colaboradores (2026) \cite{onDeviceSurvey2026}
+&
+Revisión y evaluación de técnicas de compresión y optimización para dispositivos.
+&
+Evalúa modelos representativos de aproximadamente 1,000 y 4,000 millones de parámetros mediante exactitud, latencia, energía y memoria (ALEM). Identifica diferencias entre técnicas según sus requisitos de ejecución.
+&
+Sus evaluaciones no abarcan específicamente los cinco modelos de esta tesina ni permiten extrapolar los resultados directamente a Android emulado.
+\\
+\midrule
+Chang y colaboradores (2024) \cite{llmEvaluation}
+&
+Revisión de métodos de evaluación de Grandes Modelos de Lenguaje.
+&
+Organiza tareas, conjuntos de datos y procedimientos según qué, cómo y dónde se evalúa. Identifica criterios necesarios para interpretar el desempeño de los LLM.
+&
+Su enfoque se concentra en la evaluación de capacidades y no proporciona mediciones comparables de eficiencia para modelos de 1-bit.
+\\
+\midrule
+\textbf{Propuesta de esta tesina}
+&
+Estudio comparativo de cinco modelos de lenguaje de 1-bit mediante criterios y procedimientos comunes.
+&
+Se utilizarán consultas definidas y métricas aplicables como perplejidad, exactitud, tamaño, memoria, latencia y velocidad. Se contemplan pruebas en Android emulado.
+&
+La comparación dependerá de la disponibilidad de implementaciones, las métricas aplicables y los recursos del entorno experimental. Todavía no se cuenta con resultados propios.
+\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La tabla comparativa permite identificar las diferencias entre los métodos y resultados de las investigaciones analizadas. Los trabajos de BitNet, PT-BitNet y BitNet v2 presentan estrategias específicas para desarrollar modelos de muy baja precisión, aunque difieren en sus procedimientos de entrenamiento y cuantización. Por otra parte, las investigaciones de Hildebrand y Chen demuestran la importancia de evaluar el desempeño considerando tanto las características del modelo como los recursos y condiciones de ejecución. Las revisiones bibliográficas complementan estos resultados al proporcionar fundamentos, clasificaciones y criterios de evaluación. Sin embargo, las diferencias entre arquitecturas, métricas y entornos experimentales dificultan establecer una comparación directa de las propuestas. Ante esta situación, la presente investigación busca comparar cinco modelos de lenguaje de 1-bit mediante criterios y procedimientos comunes, con el propósito de identificar sus ventajas, limitaciones y condiciones de viabilidad técnica.
 
 \subsection{Conclusión del estado del arte} \label{sec:conclusion_estado_arte} % audit:req=conclusion_estado_arte
 
