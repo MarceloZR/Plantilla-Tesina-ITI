@@ -47,6 +47,123 @@ mismos datos de entrenamiento; no justificar las métricas; no declarar hiperpar
 % >>> ESCRIBE AQUÍ el diseño de experimentos <<<
 
 
+\subsubsection{Hipótesis de investigación}
+
+La investigación busca determinar si los modelos de lenguaje de 1-bit presentan diferencias en la calidad de sus respuestas y en los recursos computacionales necesarios para ejecutarlos.
+
+Hipótesis nula ($H_0$): No existen diferencias entre los modelos evaluados en los parámetros de desempeño comparables bajo condiciones experimentales equivalentes.
+
+Hipótesis alternativa ($H_1$): Al menos dos modelos presentan diferencias en uno o más de esos parámetros.
+
+Para cada métrica susceptible de análisis estadístico, se establece:
+
+\[
+H_0:\theta_1=\theta_2=\cdots=\theta_k
+\]
+
+\[
+H_1:\exists\,i\neq j\text{ tal que }\theta_i\neq\theta_j
+\]
+
+Donde $\theta$ representa el parámetro de la métrica analizada y $k$ el número de modelos comparados. El contraste se realiza por métrica, sin suponer de antemano la superioridad de una implementación.
+
+\subsubsection{Variables independientes y dependientes}
+
+El factor principal es el modelo de lenguaje de 1-bit, cuyos niveles corresponden a las implementaciones seleccionadas. Se documentan además la representación de los pesos y la configuración de inferencia, pues influyen en el rendimiento observado.
+
+La evaluación considera diez métricas:
+
+\begin{enumerate}[nosep,leftmargin=*,itemsep=1pt]
+\item Perplejidad: capacidad para predecir secuencias de texto.
+\item Exactitud: proporción de respuestas correctas.
+\item Tamaño: espacio ocupado por el archivo del modelo.
+\item Memoria: memoria utilizada durante la ejecución.
+\item Latencia: tiempo empleado para generar una respuesta.
+\item Velocidad: tokens generados por segundo.
+\item Energía: consumo energético de la ejecución.
+\item Bits por peso: precisión de representación de los parámetros.
+\item Compresión: reducción del tamaño frente a una referencia.
+\item Pérdida: error de predicción según una función definida.
+\end{enumerate}
+
+La exactitud, la perplejidad y la pérdida caracterizan la calidad de las predicciones; memoria, latencia, velocidad y energía describen el desempeño de ejecución; tamaño, bits por peso y compresión son indicadores de almacenamiento y representación. Estas métricas permiten estudiar tanto la calidad de las respuestas como la viabilidad técnica.
+
+\subsubsection{Diseño experimental}
+
+Se emplea un diseño comparativo por bloques, donde cada pregunta del conjunto de evaluación constituye un bloque. Los modelos reciben los mismos enunciados y opciones, y sus respuestas se contrastan con la clave correspondiente.
+
+El procedimiento comprende preparar la implementación, ejecutar las preguntas, evaluar las respuestas y organizar los registros en archivos CSV. Este diseño permite comparar la exactitud sobre unidades comunes. Para las métricas computacionales se consideran también las diferencias de configuración y formato de los modelos, que pueden afectar las mediciones.
+
+\subsubsection{Datos utilizados}
+
+Se utiliza el conjunto \textit{ARC (AI2 Reasoning Challenge)}, configuración \textit{ARC-Easy}, disponible en Hugging Face. Su partición de prueba contiene 2,376 preguntas de ciencias de opción múltiple, con identificadores, alternativas y respuestas correctas.
+
+Las preguntas se presentan mediante un formato común que conserva su contenido y opciones. Las respuestas generadas se identifican y normalizan para compararlas con la clave de cada registro. Las consultas, respuestas y métricas se organizan en archivos CSV.
+
+Los modelos son previamente desarrollados y no se entrenan ni ajustan con las respuestas de prueba. No se realiza una partición propia de entrenamiento y validación. Aunque así se evita utilizar la clave de prueba durante un entrenamiento propio, no es posible descartar coincidencias con los datos originales de preentrenamiento.
+
+\subsubsection{Líneas base y métodos del Estado del arte}
+
+La comparación experimental utiliza como referencia las respuestas correctas de ARC-Easy y los resultados de los modelos ante las mismas preguntas. La clave del dataset sirve para determinar aciertos, pero no constituye por sí misma un modelo de línea base.
+
+Como referencias del Estado del arte se consideran BitNet, basado en entrenamiento con pesos de baja precisión \cite{bitnetJMLR2025}; PT-BitNet, que aplica cuantización posterior al entrenamiento \cite{ptBitnet2025}; y el estudio comparativo de técnicas de compresión en distintas plataformas realizado por Hildebrand y colaboradores \cite{compressionComparison2026}. Estos trabajos permiten contrastar enfoques de representación y criterios de eficiencia.
+
+Los valores publicados se utilizan como contexto técnico y no como mediciones directamente equivalentes cuando difieren los modelos, datos, equipos o procedimientos. No se declara una línea base propia de precisión completa si no se dispone de su ejecución comparable.
+
+\subsubsection{Repeticiones y semillas}
+
+El procedimiento establece una respuesta evaluable por pregunta y configuración del modelo. ARC-Easy proporciona 2,376 preguntas en su partición de prueba; este número corresponde al tamaño del conjunto, no a 2,376 repeticiones de una misma ejecución.
+
+Una respuesta por pregunta permite calcular la exactitud sobre los reactivos efectivamente procesados, pero no basta para estimar la estabilidad de las respuestas ni la variabilidad entre ejecuciones. Los registros revisados no acreditan un número uniforme de repeticiones ni semillas fijas para todas las implementaciones. Por tanto, no se considera demostrada la suficiencia de repeticiones para las métricas computacionales; sus resultados se reportan con el alcance que permiten los registros disponibles.
+
+\subsubsection{Pruebas estadísticas}
+
+Se adopta un nivel de significancia de $\alpha=0.05$. Para contrastar diferencias de exactitud entre tres o más modelos evaluados sobre las mismas preguntas, se utilizará la prueba Q de Cochran, a partir de resultados binarios (correcto o incorrecto). Para comparaciones entre pares se utilizará la prueba exacta de McNemar, con ajuste de Holm si se realizan múltiples contrastes.
+
+Se verificará que las implementaciones hayan respondido los mismos reactivos, que cada resultado pueda clasificarse de forma binaria y que las preguntas constituyan unidades de evaluación independientes para el contraste. Si no se dispone de registros completos y pareados, no se aplicará la prueba correspondiente.
+
+Las métricas continuas se resumirán mediante valores y medidas de dispersión. Si existen mediciones pareadas suficientes y condiciones de ejecución comparables, se empleará Friedman para varios modelos o Wilcoxon de rangos con signo para comparaciones por pares, verificando los supuestos de cada prueba. Los valores $p$ se reportarán únicamente después de calcularse sobre datos reales.
+
+\subsubsection{Reproducibilidad}
+
+Las pruebas se desarrollan en un emulador Android 17 (API 37), arquitectura x86\_64, preparado con Android Studio, SDK, NDK y ADB. La ejecución se realiza desde terminal mediante herramientas basadas en \texttt{llama.cpp} y archivos GGUF cuando son compatibles. El conjunto de evaluación corresponde a ARC-Easy, partición \textit{test}, disponible en \url{https://huggingface.co/datasets/allenai/ai2_arc}.
+
+Los archivos CSV organizan las consultas, las respuestas y las métricas; las evidencias de ejecución permiten revisar el procedimiento. El repositorio \url{https://github.com/MarceloZR/Plantilla-Tesina-ITI} contiene la documentación de la tesina, por lo que no se presenta como repositorio del código ejecutable de las pruebas.
+
+Para reproducir exactamente cada ejecución deben identificarse el equipo anfitrión, las versiones de software, el archivo y formato de pesos, los parámetros de generación y las semillas. La documentación revisada no acredita todos esos datos para cada implementación; esta carencia limita la repetición exacta del experimento y se declara expresamente, sin asignar configuraciones no verificadas.
+
+\subsubsection{Parámetros experimentales}
+
+La Tabla~\ref{tab:parametros_experimentales} resume las condiciones principales del diseño.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Parámetros del diseño experimental.}
+\label{tab:parametros_experimentales}
+\begin{tabular}{L{4.1cm}L{10.4cm}}
+\toprule
+Parámetro & Descripción \\
+\midrule
+Tipo y diseño & Estudio comparativo por bloques de preguntas \\
+Factor principal & Modelo e implementación de lenguaje de 1-bit \\
+Conjunto de evaluación & ARC (AI2 Reasoning Challenge), ARC-Easy \\
+Partición y tamaño & Prueba (\textit{test}), 2,376 preguntas de opción múltiple \\
+Criterio de exactitud & Coincidencia con la respuesta correcta del dataset \\
+Entorno & Android 17, API 37, x86\_64 \\
+Herramientas & Android Studio, SDK, NDK, ADB y llama.cpp \\
+Modelos & Archivos GGUF cuando sean compatibles \\
+Métricas & Perplejidad, exactitud, tamaño, memoria, latencia, velocidad, energía, bits por peso, compresión y pérdida \\
+Registro & Archivos CSV y evidencias de ejecución \\
+Contraste de exactitud & Q de Cochran; McNemar exacta en comparaciones por pares \\
+Nivel de significancia & $\alpha=0.05$ \\
+Repeticiones & Una respuesta por reactivo y configuración; no equivale a réplicas \\
+Semillas & Sin registro uniforme acreditado para todas las implementaciones \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
 \subsection{Resultados experimentales} \label{sec:resultados_experimentales} % audit:req=resultados_experimentales
 
 \begin{guia}[Guía: Resultados experimentales]
