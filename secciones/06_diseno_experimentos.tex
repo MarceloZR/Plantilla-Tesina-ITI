@@ -189,6 +189,72 @@ variabilidad.
 
 % >>> ESCRIBE AQUÍ los resultados experimentales <<<
 
+\subsubsection{Resultados obtenidos}
+
+Las primeras evaluaciones se realizaron mediante diez preguntas elaboradas manualmente, relacionadas con matemáticas, vocabulario, conocimientos generales y seguimiento de instrucciones. En las dos implementaciones con resultados documentados se registraron 10 aciertos de 10 consultas y 0 aciertos de 10, respectivamente. La Tabla~\ref{tab:resultados_62} reúne los valores obtenidos de las diez métricas seleccionadas para la investigación.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.10}
+\caption{Resultados de las evaluaciones iniciales.}
+\label{tab:resultados_62}
+\begin{tabular}{L{2.60cm}L{5.65cm}L{5.10cm}}
+\toprule
+Métrica & BitNet b1.58 (I2\_S) & FBI-LLM 130M (F32) \\
+\midrule
+Perplejidad & - & 29.9849 \\
+Exactitud & 100\,\% (10/10) & 0\,\% (0/10) \\
+Tamaño & - & 512.27 MiB \\
+Memoria & 1,212.54 MiB & 569.49 MiB \\
+Latencia & - & 0.36 s/respuesta \\
+Velocidad & 6.64--10.10 tokens/s & 70.94 tokens/s \\
+Energía & - & 105.957 J (estimado) \\
+Bits por peso & 1.58 teóricos; archivo I2\_S & 32 bits; archivo F32 \\
+Compresión & 90.1\,\% teórica frente a FP16 & 1.00 veces respecto al original \\
+Pérdida & - & 3.4007 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+En estas primeras pruebas, la configuración con mayor exactitud registró un consumo de memoria más elevado y una menor velocidad de generación, mientras que la otra utilizó menos memoria y produjo texto más rápidamente. La Figura~\ref{fig:memoria_62} permite visualizar la diferencia de memoria, teniendo en cuenta que las configuraciones emplearon representaciones de pesos distintas.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=0.74cm]
+\draw[->] (0,0)--(0,4.45);
+\draw[->] (0,0)--(8.25,0);
+\foreach \v/\y in {0/0,300/0.85,600/1.70,900/2.55,1200/3.40}{
+\draw (-0.06,\y)--(0.06,\y);
+\node[left,font=\scriptsize] at (-0.12,\y){\v};
+}
+\node[rotate=90,font=\small] at (-1.00,2.15){Memoria (MiB)};
+\fill[gray!55] (1.55,0) rectangle (3.25,3.4355);
+\fill[gray!22] (4.75,0) rectangle (6.45,1.6136);
+\node[above,font=\small] at (2.40,3.49){1,212.54};
+\node[above,font=\small] at (5.60,1.67){569.49};
+\node[below,align=center,font=\small] at (2.40,-0.10){BitNet b1.58\\(I2\_S)};
+\node[below,align=center,font=\small] at (5.60,-0.10){FBI-LLM 130M\\(F32)};
+\end{tikzpicture}
+\caption{Memoria registrada durante las primeras evaluaciones.}
+\label{fig:memoria_62}
+\end{figure}
+
+\filbreak
+\subsubsection{Comparación con las líneas base y análisis estadístico}
+
+En las diez preguntas iniciales, BitNet b1.58 obtuvo 10 aciertos (100\,\%) y FBI-LLM 130M no obtuvo respuestas correctas (0\,\%). En cambio, la segunda implementación registró menor uso de memoria (569.49 frente a 1,212.54 MiB) y mayor velocidad (70.94 frente a 6.64--10.10 tokens/s). Los resultados muestran diferencias entre exactitud y rendimiento, pero no permiten determinar qué modelo es mejor en todas las condiciones, porque se ejecutaron con configuraciones y formatos de pesos distintos.
+
+El contraste exacto de McNemar para los aciertos de las mismas diez consultas produjo $p=0.001953125$. Los intervalos de confianza de Wilson al 95\,\% fueron de 72.25--100\,\% y de 0--27.75\,\%, respectivamente. Estas cifras corresponden únicamente a las preguntas iniciales y no a ARC-Easy. No se dispuso de una línea base de precisión completa ejecutada en condiciones equivalentes ni de suficientes repeticiones para calcular la media $\pm$ desviación estándar de memoria y velocidad.
+
+\subsubsection{Resultados negativos, errores y cambio de metodología}
+
+Durante las primeras pruebas se registraron respuestas incorrectas, repeticiones de texto y salidas incompletas por el límite de 24 tokens. Algunas implementaciones también presentaron dificultades de compatibilidad durante su ejecución.
+
+Reconocí tres errores principales en el procedimiento inicial: utilicé solo diez preguntas manuales, no organicé los resultados en archivos CSV desde el comienzo y no establecí una forma consistente de obtener las diez métricas. Por ello, varias mediciones quedaron sin obtener y se representan con un guion (-) en la Tabla~\ref{tab:resultados_62}; esto no significa que su valor fuera cero.
+
+Para corregir estos errores cambié la metodología de trabajo. Incorporé ARC-Easy, con 2,376 preguntas en su partición de prueba, y organicé los registros en archivos CSV para relacionar consultas, respuestas y métricas. Las pruebas iniciales se conservaron como evidencia de los resultados obtenidos y de las dificultades encontradas. No se presentan aquí resultados estadísticos de ARC-Easy porque los registros disponibles todavía no permiten verificarlos.
+
 
 \subsection{Conclusiones de los resultados experimentales} \label{sec:conclusiones_resultados} % audit:req=conclusiones_resultados
 
